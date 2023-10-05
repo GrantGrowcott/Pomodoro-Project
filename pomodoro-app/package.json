@@ -9,12 +9,17 @@
     "web": "expo start --web"
   },
   "dependencies": {
+    "@react-three/fiber": "^8.14.3",
+    "@reduxjs/toolkit": "^1.9.6",
+    "@types/three": "^0.156.0",
     "expo": "~49.0.11",
+    "expo-gl": "~13.0.1",
     "expo-status-bar": "~1.6.0",
     "react": "18.2.0",
     "react-native": "0.72.5",
     "react-native-dropdown-picker": "^5.4.6",
-    "react-native-vector-icons": "^10.0.0"
+    "react-native-vector-icons": "^10.0.0",
+    "react-redux": "^8.1.2"
   },
   "devDependencies": {
     "@babel/core": "^7.20.0",

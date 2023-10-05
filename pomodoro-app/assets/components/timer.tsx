@@ -1,8 +1,10 @@
 import { View, Text, TouchableOpacity } from "react-native";
 import { useEffect, useState } from "react";
+import { useDispatch } from "react-redux";
 import { styles } from "../styles/styles";
 import Icon from "react-native-vector-icons/FontAwesome";
 import { PomodoroSession, Session } from "../../backend/pomodoro";
+import { arcIncrement, arcReset } from "../redux/slices/TorusArc_Slice";
 import React from "react";
 
 const secondsToMinutesString = (seconds: number): string => {
@@ -31,6 +33,7 @@ const Timer = ({ pomodoroSession }: { pomodoroSession: PomodoroSession }) => {
   const [sessionTime, setSessionTime] = useState(
     secondsToMinutesString(pomodoroSession.focusDurationSeconds)
   );
+  const dispatch = useDispatch();
 
   function handlePlayPauseButton() {
     console.log(`Play/Pause button pressed`);
@@ -39,6 +42,13 @@ const Timer = ({ pomodoroSession }: { pomodoroSession: PomodoroSession }) => {
         // This is a break session. Pressing the play button should start a new focus session.
         console.log("Ending break session to start new focus session");
         pomodoroSession.endSession();
+        // Every time the break session is ended, the arc should increment.
+        // This is a redux action.
+        if (currentSession.type === "short-break") {
+          dispatch(arcIncrement());
+        } else {
+          dispatch(arcReset());
+        }
       }
       const session = pomodoroSession.startSession();
       setCurrentSession(session);
@@ -83,7 +93,7 @@ const Timer = ({ pomodoroSession }: { pomodoroSession: PomodoroSession }) => {
   }
 
   useEffect(() => {
-    let timer: NodeJS.Timeout;
+    let timer: any;
     if (currentSession !== null) {
       timer = setInterval(() => {
         if (pomodoroSession.activeSession !== null) {
