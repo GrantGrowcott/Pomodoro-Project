@@ -1,8 +1,8 @@
 import { configureStore } from "@reduxjs/toolkit";
-import treePhaseReducer from "./slices/TreePhase_Slice";
+import torusArcSlice from "./slices/TorusArc_Slice";
 
 export const store = configureStore({
-  reducer: { treePhase: treePhaseReducer },
+  reducer: { torusArc: torusArcSlice },
 });
 
 export type RootState = ReturnType<typeof store.getState>;
