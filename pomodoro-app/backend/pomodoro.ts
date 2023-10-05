@@ -73,6 +73,7 @@ export class Session {
           this.durationSeconds * 1000
       );
     }
+    return new Date(this.startTime.getTime() + this.durationSeconds * 1000);
   }
 
   get timeInSession() {
@@ -84,6 +85,18 @@ export class Session {
       return result;
     }
     return result - this.pause.timeElapsed();
+  }
+
+  get timeRemainingSeconds() {
+    if (this.actualEndTime !== null) {
+      return 0;
+    }
+    const result =
+      (this.originalEndTime.getTime() - new Date().getTime()) / 1000;
+    if (result < 0) {
+      return 0;
+    }
+    return result;
   }
 
   get sessionStatus(): SessionStatus {
@@ -132,6 +145,10 @@ export class Session {
     return this.isInProgress || this.isPaused;
   }
 
+  get pausedOnce() {
+    return this.pause !== null;
+  }
+
   endSession() {
     if (this.actualEndTime !== null) {
       throw new Error("Session already ended");
@@ -155,6 +172,17 @@ export class Pomodoro {
   focusDurationSeconds: number = 25 * 60;
   breakSession: Session | null = null;
   breakDurationSeconds: number = 5 * 60;
+  breakSessionType: "short-break" | "long-break" = "short-break";
+
+  constructor(
+    focusDurationSeconds: number = 25 * 60,
+    breakDurationSeconds: number = 5 * 60,
+    breakSessionType: "short-break" | "long-break" = "short-break"
+  ) {
+    this.focusDurationSeconds = focusDurationSeconds;
+    this.breakDurationSeconds = breakDurationSeconds;
+    this.breakSessionType = breakSessionType;
+  }
 
   get lastActiveSession(): Session | null {
     if (this.breakSession !== null) {
@@ -177,6 +205,7 @@ export class Pomodoro {
     if (this.lastActiveSession !== null && this.lastActiveSession.isActive) {
       return this.lastActiveSession;
     }
+    return null;
   }
 
   get isActive(): boolean {
@@ -202,7 +231,7 @@ export class Pomodoro {
       this.breakSession = new Session(
         new Date(),
         this.breakDurationSeconds,
-        "short-break",
+        this.breakSessionType,
         null
       );
     } else {
@@ -217,17 +246,20 @@ export class Pomodoro {
     if (this.activeSession === null) {
       throw new Error("This should never happen");
     }
+    const endedSessionType = this.activeSession.type;
     this.activeSession.endSession();
-    if (this.activeSession.type === "focus") {
+    if (endedSessionType === "focus") {
       // Start break session
+      console.log("Start break session");
       this.breakSession = new Session(
         new Date(),
         this.breakDurationSeconds,
-        "short-break",
+        this.breakSessionType,
         null
       );
       return this.breakSession;
     }
+    return null;
   }
 
   toggleSessionPause() {
@@ -247,6 +279,18 @@ export class PomodoroSession {
   shortBreakDurationSeconds: number = 5 * 60;
   longBreakDurationSeconds: number = 15 * 60;
 
+  constructor(
+    focusDurationSeconds: number = 25 * 60,
+    shortBreakDurationSeconds: number = 5 * 60,
+    longBreakDurationSeconds: number = 15 * 60
+  ) {
+    this.pomodoros = [];
+    this.focusDurationSeconds = focusDurationSeconds;
+    this.shortBreakDurationSeconds = shortBreakDurationSeconds;
+    this.longBreakDurationSeconds = longBreakDurationSeconds;
+    this.addPomodoro();
+  }
+
   get activePomodoro(): Pomodoro | null {
     if (this.pomodoros.length === 0) {
       return null;
@@ -258,12 +302,19 @@ export class PomodoroSession {
   }
 
   get lastActiveSession(): Session | null {
+    // IF there are no pomodoros, there can be no active session
+    console.log(this.pomodoros);
+    if (this.pomodoros.length === 0) {
+      return null;
+    }
     // Iterate through pomodoros in reverse order and check for active session on each
     for (let i = this.pomodoros.length - 1; i >= 0; i--) {
+      // If pomodoros[i] is undefined, throw an error
       if (this.pomodoros[i].isActive) {
         return this.pomodoros[i].activeSession;
       }
     }
+    return null;
   }
 
   get lastCompleteSession(): Session | null {
@@ -280,27 +331,11 @@ export class PomodoroSession {
     if (this.activePomodoro !== null && this.activePomodoro.isActive) {
       return this.activePomodoro.activeSession;
     }
+    return null;
   }
 
   get isActive(): boolean {
-    if (this.pomodoros.length === 0) {
-      // No pomodoros, must be active
-      return true;
-    }
-    // If any pomodoro is currently active, then the session is active
-    if (this.pomodoros.some((pomodoro) => pomodoro.isActive)) {
-      return true;
-    }
-    // No pomodoro is currently active, but has it been more than 2 hours since the last pomodoro?
-    if (
-      this.lastActiveSession !== null &&
-      this.lastActiveSession.actualEndTime !== null &&
-      new Date().getTime() - this.lastActiveSession.actualEndTime.getTime() >
-        2 * 60 * 60 * 1000
-    ) {
-      return false;
-    }
-    return true;
+    return this.activeSession !== null && this.activeSession.isActive;
   }
 
   get isComplete(): boolean {
@@ -326,8 +361,7 @@ export class PomodoroSession {
         return "long-break";
       }
       return "focus";
-    }
-    else {
+    } else {
       // Either focus or short-break
       if (this.lastCompleteSession === null) {
         throw new Error("This should never happen");
@@ -343,33 +377,37 @@ export class PomodoroSession {
   get totalFocusTimeSeconds(): number {
     return this.pomodoros.reduce(
       (total, pomodoro) =>
-        total + pomodoro.focusSession?.timeInSession || 0,
+        total +
+        (pomodoro.focusSession ? pomodoro.focusSession.timeInSession : 0),
       0
     );
   }
 
   startSession(): Session {
+    console.log("startSession");
     if (this.activeSession !== null) {
       throw new Error("Session already started");
     }
-    if (this.pomodoros.length === 0) {
-      this.addPomodoro();
+    let lastPomodoro = this.pomodoros[this.pomodoros.length - 1];
+    if (lastPomodoro.isComplete) {
+      console.log("Adding pomodoro because last pomodoro is complete");
+      // Use a long break if 4 focus sessions are done
+      console.log(
+        "in startSession: ",
+        this.pomodoros.length % 4 === 0,
+        this.pomodoros.length
+      );
+      this.addPomodoro(this.pomodoros.length % 4 === 0);
+      lastPomodoro = this.pomodoros[this.pomodoros.length - 1];
     }
-    if (this.pomodoros.length < 4) {
-      let lastPomodoro = this.pomodoros[this.pomodoros.length - 1];
-      if (lastPomodoro.isComplete) {
-        this.addPomodoro();
-        lastPomodoro = this.pomodoros[this.pomodoros.length - 1]; 
-      }
-      lastPomodoro.startSession();
-      if (this.activeSession === null) {
-        throw new Error("This should never happen");
-      }
-      return this.activeSession;
+    lastPomodoro.startSession();
+    if (this.activeSession === null) {
+      throw new Error("This should never happen");
     }
+    return this.activeSession;
   }
 
-  endSession(): Session | Pomodoro {
+  endSession(): Session | null {
     if (!this.isActive) {
       throw new Error("Session not started");
     }
@@ -384,11 +422,18 @@ export class PomodoroSession {
       // Break session was started, return it
       return maybeBreakSession;
     }
-    // No new session was started, start a new pomodoro
-    this.addPomodoro();
+    return null;
+  }
+
+  toggleSession(): Session | null {
+    if (this.isActive) {
+      return this.endSession();
+    }
+    return this.startSession();
   }
 
   toggleSessionPause() {
+    console.log("toggleSessionPause", this.isActive);
     if (!this.isActive) {
       throw new Error("Session not started");
     }
@@ -398,10 +443,19 @@ export class PomodoroSession {
     this.activePomodoro.toggleSessionPause();
   }
 
-  private addPomodoro(): Pomodoro {
-    const result = new Pomodoro();
+  private addPomodoro(useLongBreak: boolean = false): Pomodoro {
+    let breakDurationSeconds = this.shortBreakDurationSeconds;
+    let breakSessionType: "short-break" | "long-break" = "short-break";
+    if (useLongBreak) {
+      breakDurationSeconds = this.longBreakDurationSeconds;
+      breakSessionType = "long-break";
+    }
+    const result = new Pomodoro(
+      this.focusDurationSeconds,
+      breakDurationSeconds,
+      breakSessionType
+    );
     this.pomodoros.push(result);
     return result;
   }
-
 }
