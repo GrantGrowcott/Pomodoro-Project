@@ -112,7 +112,7 @@ const Timer = ({ pomodoroSession }: { pomodoroSession: PomodoroSession }) => {
 
   return (
     <View style={styles.container}>
-      <View style={[styles.timerContainer, styles.timerMargin]}>
+      <View style={[styles.timerContainer]}>
         <TouchableOpacity style={[styles.timeButton]}>
           <Text>{currentSession?.type ?? "focus"}</Text>
         </TouchableOpacity>
