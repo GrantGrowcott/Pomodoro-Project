@@ -19,7 +19,7 @@ const TorusDisplay = () => {
   return (
     <>
       <View style={styles.canvasContainer}>
-        <Canvas camera={{ position: [0, 0, 10] }}>
+        <Canvas camera={{ position: [0, 0, 2] }}>
           <ambientLight intensity={2} />
           <pointLight position={[0, 0, 10]} intensity={5} />
           {torusSpawn()}

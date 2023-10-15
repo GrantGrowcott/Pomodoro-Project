@@ -17,10 +17,13 @@ export const torusArcSlice = createSlice({
     arcIncrement: (state) => {
       state.value += 1;
     },
+    arcReset: (state) => {
+      state.value = 1;
+    },
   },
 });
 
-export const { arcIncrement } = torusArcSlice.actions;
+export const { arcIncrement, arcReset } = torusArcSlice.actions;
 
 export default torusArcSlice.reducer;
 

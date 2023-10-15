@@ -17,16 +17,18 @@ const Torus = ({ arc }: TorusProps) => {
   const phaseCheck = (arc: number) => {
     switch (arc) {
       case 1:
-        return Math.PI * 0.7;
+        return Math.PI * 0.5;
       case 2:
-        return Math.PI * 1.5;
+        return Math.PI * 1.0;
       case 3:
+        return Math.PI * 1.5;
+      case 4:
         return Math.PI * 2;
     }
   };
 
   const onClickHandler = () => {
-    if (torusArc != 3) {
+    if (torusArc < 4) {
       dispatch(arcIncrement());
     }
   };
@@ -48,7 +50,7 @@ const Torus = ({ arc }: TorusProps) => {
       receiveShadow={true}
       ref={ref}
       position={[0, 0, -10]}
-      onClick={() => onClickHandler()}
+      // onClick={() => onClickHandler()}
     >
       <torusGeometry args={[5, 1, 16, 32, phaseCheck(arc)]} />
       <meshStandardMaterial color="#00cc66" />
