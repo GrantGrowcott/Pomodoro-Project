@@ -2,8 +2,9 @@ import { Mesh } from "three";
 import { useRef } from "react";
 import { useFrame } from "@react-three/fiber";
 import { useDispatch } from "react-redux";
-import { useAppSelector } from "../redux/useApp";
-import { arcIncrement } from "../redux/slices/TorusArc_Slice";
+import { useAppSelector } from "../assets/redux/useApp";
+import { arcIncrement } from "../assets/redux/slices/TorusArc_Slice";
+import React from "react";
 
 interface TorusProps {
   arc: number;

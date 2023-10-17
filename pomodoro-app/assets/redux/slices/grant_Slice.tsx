@@ -11,9 +11,6 @@ interface NoteState {
   description: string;
   title: string;
   storedNotes: Note[];
-  open: boolean;
-  value: string;
-  items: { label: string; value: string }[];
 }
 
 
@@ -24,15 +21,6 @@ const taskSlice = createSlice({
     description: '',
     title: '',
     storedNotes: [], 
-    open: false ,
-    value: '',
-    items: [
-      { label: 'General', value: 'General' },
-      { label: 'Work', value: 'Work' },
-      { label: 'Exercise', value: 'Exercise' },
-      { label: 'Meditation', value: 'Meditation' },
-      { label: 'Read', value: 'Read' },
-    ],
   } as NoteState,
   reducers: {
     setSelectedCategory: (state, action: PayloadAction<string>) => {
@@ -47,15 +35,7 @@ const taskSlice = createSlice({
     setStoredNotes: (state, action: PayloadAction<Note[]>) => {
       state.storedNotes = action.payload;
     },
-    setOpen: (state, action: PayloadAction<boolean>) => {
-      state.open = action.payload;
-    },  
-    setValue :(state, action: PayloadAction<string>) => {
-      state.value = action.payload;
-    },
-    setItems: (state, action: PayloadAction<{ label: string; value: string }[]>) => {
-      state.items = action.payload;
-    }, 
+    
     editNote: (state, action: PayloadAction<{ index: number; updatedNote: Note }>) => {
       const { index, updatedNote } = action.payload;
       state.storedNotes[index] = updatedNote;
@@ -64,6 +44,6 @@ const taskSlice = createSlice({
   },
 });
 
-export const { setSelectedCategory, setDescription, setTitle, setStoredNotes, setOpen, setValue, setItems, editNote } = taskSlice.actions;
+export const { setSelectedCategory, setDescription, setTitle, setStoredNotes,editNote } = taskSlice.actions;
 
 export default taskSlice.reducer;

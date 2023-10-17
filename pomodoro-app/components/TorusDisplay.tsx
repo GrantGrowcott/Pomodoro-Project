@@ -1,9 +1,10 @@
-import { View, Text } from "react-native";
+import { View} from "react-native";
 import { styles } from "../styles/styles";
-import { useAppSelector } from "../redux/useApp";
+import { useAppSelector } from "../assets/redux/useApp";
 import { useDispatch } from "react-redux";
 import { Canvas, useThree } from "@react-three/fiber";
 import Torus from "./Torus";
+import React from "react";
 
 const TorusDisplay = () => {
   // No more Tree - Torus is the way now.

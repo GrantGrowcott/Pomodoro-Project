@@ -1,6 +1,6 @@
 import { useSelector, useDispatch } from 'react-redux';
-import {setStoredNotes,editNote} from '../redux/slices/grant_Slice';
-import { RootState } from '../redux/Store';
+import {setStoredNotes,editNote} from '../assets/redux/slices/grant_Slice';
+import { RootState } from '../assets/redux/Store';
 import React from 'react';
 import { View, TextInput, Text,FlatList, TouchableOpacity} from 'react-native';
 import { styles } from '../styles/styles';
@@ -12,8 +12,7 @@ const TaskDisplay = () => {
 
   const dispatch = useDispatch();
   const task = useSelector((state:RootState) => state.task)
-
-  const {storedNotes } = task
+  const {storedNotes} = task
 
 
   const deleteData = async (titleToDelete: string) => {
@@ -43,13 +42,13 @@ const TaskDisplay = () => {
     
     
     return (
-        <View style={{ width: '100%', flex : 1}}>
+        <View style={styles.flatListContainer}>
         <FlatList
           data={storedNotes}
           keyExtractor={(item, index) => index.toString()}
           renderItem={({ item, index }) => (
             <View key={index} style={styles.noteContainer}>
-              <Text style={{...styles.textContainer, borderRadius: 30, borderWidth: 1, borderColor: "black", width: "30%", alignSelf: "center", marginTop: 0 }}> {item.category}</Text>
+              <Text style={{...styles.textContainer, ...styles.categoryIcon }}> {item.category}</Text>
               <TextInput
                 style={{...styles.textContainer, fontWeight: 'bold'}}
                 value={item.title}
