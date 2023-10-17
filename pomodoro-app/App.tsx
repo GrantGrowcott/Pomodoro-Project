@@ -1,29 +1,42 @@
-import { StatusBar } from "expo-status-bar";
-import { View} from "react-native";
-import { Provider } from "react-redux";
-import { store } from "./assets/redux/Store";
-import Task from "./assets/components/task";
-import TorusDisplay from "./assets/components/TorusDisplay";
-import Timer from "./assets/components/timer";
-import { styles } from "./assets/styles/styles";
 import React from "react";
-import { PomodoroSession } from "./backend/pomodoro";import TaskDisplay from "./assets/components/taskDisplay";
+import { NavigationContainer } from '@react-navigation/native';
+import { createNativeStackNavigator } from '@react-navigation/native-stack';
+import Home from "./components/Home";
+import Header from "./components/Header";
+import Notes from "./components/Notes";
+import { OpenSans_800ExtraBold_Italic, useFonts } from '@expo-google-fonts/open-sans';
 
+
+const Stack = createNativeStackNavigator();
 
 export default function App() {
-  const pomodoroSession = new PomodoroSession(25, 5, 15);
+
+  const [fontsLoaded] = useFonts({
+    OpenSans_800ExtraBold_Italic,
+  });
+
+
+ if (!fontsLoaded) {
+  return null
+}
+  
   return (
-    <Provider store={store}>
-      <View style={styles.canvasContainer}>
-        <TorusDisplay />
-      </View> 
-      <View style={styles.container}>
-        <Timer pomodoroSession={pomodoroSession} />
-        <StatusBar style="auto" />
-      </View>  
-      <Task/>
-      
-      <TaskDisplay/>
-    </Provider>
+    <NavigationContainer>
+      <Stack.Navigator initialRouteName="Home" screenOptions={{animation: "none"}}>
+        <Stack.Screen name="Home"
+          component={Home}
+          options={{
+            header: () => <Header />,
+            animation: "none"
+          }} />
+          <Stack.Screen name="Notes"
+          component={Notes}
+          options={{
+            header: () => <Header />,
+            animation: "none"
+          }} />
+      </Stack.Navigator> 
+    </NavigationContainer>
+    
   );
 }

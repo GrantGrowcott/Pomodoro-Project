@@ -4,22 +4,16 @@ import { styles } from '../styles/styles';
 import DropDownPicker from 'react-native-dropdown-picker';
 import AsyncStorage from '@react-native-async-storage/async-storage';
 import { useSelector, useDispatch } from 'react-redux';
-import {setSelectedCategory, setDescription, setTitle, setStoredNotes} from '../redux/slices/grant_Slice';
-import { RootState } from '../redux/Store';
-import { Note } from '../redux/slices/grant_Slice';
-
+import {setSelectedCategory, setDescription, setTitle, setStoredNotes} from '../assets/redux/slices/grant_Slice';
+import { RootState } from '../assets/redux/Store';
+import { Note } from '../assets/redux/slices/grant_Slice';
+import { dropdownValues } from '../constants';
 
 
 const Task = () => {
   const [open, setOpen] = useState(false);
   const [value, setValue] = useState('');
-  const [items, setItems] = useState([
-    { label: 'General', value: 'General' },
-    { label: 'Work', value: 'Work' },
-    { label: 'Exercise', value: 'Exercise' },
-    { label: 'Meditation', value: 'Meditation' },
-    { label: 'Read', value: 'Read' },
-  ]);
+  const [items, setItems] = useState(dropdownValues);
 
   const dispatch = useDispatch();
   const task = useSelector((state:RootState) => state.task)

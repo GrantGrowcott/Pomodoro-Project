@@ -3,8 +3,8 @@ import { useEffect, useState } from "react";
 import { useDispatch } from "react-redux";
 import { styles } from "../styles/styles";
 import Icon from "react-native-vector-icons/FontAwesome";
-import { PomodoroSession, Session } from "../../backend/pomodoro";
-import { arcIncrement, arcReset } from "../redux/slices/TorusArc_Slice";
+import { PomodoroSession, Session } from "../backend/pomodoro";
+import { arcIncrement, arcReset } from "../assets/redux/slices/TorusArc_Slice";
 import React from "react";
 
 const secondsToMinutesString = (seconds: number): string => {
