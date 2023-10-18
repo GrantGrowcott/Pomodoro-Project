@@ -9,7 +9,6 @@ interface Session {
 const initialState: Session = {
   duration: [1, 5, 15], // Focus - Short Break - Long Break
   type: ["focus", "short", "long"],
-
   currentType: "focus",
 };
 

@@ -3,7 +3,11 @@ import { useState } from "react";
 import { useDispatch } from "react-redux";
 import { styles } from "../styles/styles";
 import Icon from "react-native-vector-icons/FontAwesome";
-import { arcIncrement, arcReset } from "../assets/redux/slices/TorusArc_Slice";
+import {
+  arcReset,
+  arcIncrement,
+  arcSkip,
+} from "../assets/redux/slices/TorusArc_Slice";
 import { increaseCompleted } from "../assets/redux/slices/Pomodoro_Slice";
 import { useAppSelector } from "../assets/redux/useApp";
 import React from "react";
@@ -61,7 +65,7 @@ const Timer = () => {
   const [sessionCtrl, setSessionCtrl] = useState<number>(0); // Helps defining what type of session the user is currently on | 0 = focus, 1 = short, 2 = long
   const [sessionTime, setSessionTime] = useState<number>(durations.focus); // Current session time in seconds - taken from Session_Slice and whatever value has in that moment
   const [sessionType, setSessionType] = useState<string>("focus"); // Current Session Type
-  const [sessionConsecutive, setSessionConsecutive] = useState<number>(0);
+  const [sessionRound, setSessionRound] = useState<number>(1);
   const [sessionActive, setSessionActive] = useState<boolean>(false); // Provides feedback if a session is currently running or not
   const [sessionPaused, setSessionPaused] = useState<boolean>(false); // Provides feedback if a session is paused or not
 
@@ -69,6 +73,7 @@ const Timer = () => {
   const sessionPrep: SessionPrep = {
     focus: () => {
       intervals.stop();
+      setSessionRound(sessionRound + 1);
       setSessionTime(durations.focus);
       setSessionType("focus");
       setPlayPauseButtonState(PlayPauseButtonState.Paused);
@@ -78,8 +83,6 @@ const Timer = () => {
       intervals.stop();
       setPlayPauseButtonState(PlayPauseButtonState.Paused);
       dispatch(increaseCompleted());
-      dispatch(arcIncrement());
-      setSessionConsecutive(sessionConsecutive + 1);
       setSessionTime(durations.short);
       setSessionType("short break");
       setSessionCtrl(1);
@@ -87,8 +90,6 @@ const Timer = () => {
     long: () => {
       intervals.stop();
       setPlayPauseButtonState(PlayPauseButtonState.Paused);
-      dispatch(arcReset);
-      setSessionConsecutive(0);
       setSessionTime(durations.long);
       setSessionType("long break");
       setSessionCtrl(2);
@@ -111,6 +112,8 @@ const Timer = () => {
       // Time is running fellas
       if (sessionTime != 0) {
         setSessionTime(sessionTime - 1);
+
+        if (sessionCtrl == 0) dispatch(arcIncrement()); // Increasing the Torus!
       }
 
       // Time is up!
@@ -118,17 +121,19 @@ const Timer = () => {
         switch (sessionCtrl) {
           case 0: // End of Pomodoro
             dispatch(increaseCompleted()); // +1 Pomodoros completed
-
-            // If 4 consecutive Pomodoros have NOT been completed...
-            if (sessionConsecutive != 4) sessionPrep.short();
-            // If 4 consecutive Pomodoros have been completed...
-            if (sessionConsecutive == 4) sessionPrep.long();
+            // If 4 Round Pomodoros have NOT been completed...
+            if (sessionRound != 4) sessionPrep.short();
+            // If 4 Round Pomodoros have been completed...
+            if (sessionRound == 4) sessionPrep.long();
             break;
           case 1: // End of Short Break
             sessionPrep.focus();
+            dispatch(arcReset());
             break;
           case 2: // End of Long Break
             sessionPrep.focus();
+            setSessionRound(1);
+            dispatch(arcReset());
             break;
         }
       }
@@ -156,8 +161,8 @@ const Timer = () => {
     }
   };
 
-  // Stop Button onPress Handler
-  const handleStopButton = () => {
+  // Reset Button onPress Handler
+  const handleResetButton = () => {
     intervals.stop();
     switch (sessionCtrl) {
       case 0:
@@ -170,9 +175,38 @@ const Timer = () => {
         setSessionTime(durations.long);
         break;
     }
+    dispatch(arcReset());
     setPlayPauseButtonState(PlayPauseButtonState.Paused);
     setSessionActive(false);
     setSessionPaused(false);
+  };
+
+  // Skip Button onPress Handler
+  const handleSkipButton = () => {
+    intervals.stop();
+    setPlayPauseButtonState(PlayPauseButtonState.Paused);
+    setSessionActive(true);
+    setSessionPaused(false);
+
+    switch (sessionCtrl) {
+      case 0:
+        dispatch(increaseCompleted());
+        dispatch(arcSkip()); // +1 Pomodoros completed
+        // If 4 Round Pomodoros have NOT been completed...
+        if (sessionRound != 4) sessionPrep.short();
+        // If 4 Round Pomodoros have been completed...
+        if (sessionRound == 4) sessionPrep.long();
+        break;
+      case 1: // End of Short Break
+        sessionPrep.focus();
+        dispatch(arcReset());
+        break;
+      case 2: // End of Long Break
+        sessionPrep.focus();
+        setSessionRound(1);
+        dispatch(arcReset());
+        break;
+    }
   };
 
   return (
@@ -185,7 +219,18 @@ const Timer = () => {
         </TouchableOpacity>
       </View>
       <Text>{secondsToMinutesString(sessionTime)}</Text>
+
+      {/* Buttons */}
       <View style={styles.timerContainer}>
+        {/* Reset Button */}
+        <TouchableOpacity
+          style={[styles.button, styles.stopColor]}
+          onPress={handleResetButton}
+        >
+          <Icon name="refresh" size={30} color="black" />
+        </TouchableOpacity>
+
+        <View style={styles.gap} />
         {/* Play/Pause button */}
         <TouchableOpacity
           style={[styles.button, styles.startColor]}
@@ -203,17 +248,21 @@ const Timer = () => {
           }
         </TouchableOpacity>
         <View style={styles.gap} />
-
-        {/* Stop button */}
+        {/* Skip button */}
         <TouchableOpacity
           style={[styles.button, styles.stopColor]}
-          onPress={handleStopButton}
+          onPress={handleSkipButton}
         >
-          <Icon name="stop" size={30} color="black" />
+          <Icon name="forward" size={30} color="black" />
         </TouchableOpacity>
-        <View style={styles.gap} />
-        <TouchableOpacity style={[styles.button, styles.stopColor]}>
-          <Icon name="refresh" size={30} color="black" />
+      </View>
+
+      {/* Rounds info */}
+      <View style={styles.timerContainer}>
+        <TouchableOpacity style={[styles.timeButton]}>
+          <Text style={{ textTransform: "capitalize" }}>
+            {sessionRound + "/4 Rounds"}
+          </Text>
         </TouchableOpacity>
       </View>
     </View>

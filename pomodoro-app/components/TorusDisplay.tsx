@@ -1,7 +1,5 @@
 import { View } from "react-native";
 import { styles } from "../styles/styles";
-import { useAppSelector } from "../assets/redux/useApp";
-
 import { Canvas } from "@react-three/fiber";
 import Torus from "./Torus";
 import React from "react";
@@ -11,12 +9,11 @@ const TorusDisplay = () => {
   // Unknown knowledge is needed to import 3D assets using React Native/Expo.
   // This will eventually be implemented as a tree with phases/animations.
   // For now, an instanced TorusGeometry within Canvas will be used as a placeholder.
-  const torusArc = useAppSelector((state) => state.torusArc.value);
 
   const torusSpawn = () => {
     console.log("Torus spawning");
 
-    return <Torus arc={torusArc} />;
+    return <Torus />;
   };
 
   return (

@@ -1,28 +1,38 @@
-import { createSlice } from "@reduxjs/toolkit";
+import { createSlice, PayloadAction } from "@reduxjs/toolkit";
 
 // This state is a control value to give the TorusGeometry 'phases'
 // Each phase correlates to each completed Pomodoro
 interface TorusArcState {
-  value: number;
+  index: number;
+  angle: number;
 }
 
 const initialState: TorusArcState = {
-  value: 1,
+  index: 0,
+  angle: 0,
 };
 
 export const torusArcSlice = createSlice({
   name: "torusArc",
   initialState,
   reducers: {
+    setIndex: (state, action: PayloadAction<number>) => {
+      state.index = action.payload;
+      state.angle = action.payload;
+    },
     arcIncrement: (state) => {
-      state.value += 1;
+      state.angle = state.angle + state.index;
+    },
+    arcSkip: (state) => {
+      state.angle = Math.PI * 2;
     },
     arcReset: (state) => {
-      state.value = 1;
+      state.angle = state.index;
     },
   },
 });
 
-export const { arcIncrement, arcReset } = torusArcSlice.actions;
+export const { setIndex, arcReset, arcIncrement, arcSkip } =
+  torusArcSlice.actions;
 
 export default torusArcSlice.reducer;
