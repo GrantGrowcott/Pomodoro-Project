@@ -11,7 +11,7 @@ interface TorusProps {
 }
 
 const Torus = ({ arc }: TorusProps) => {
-  const ref = useRef<Mesh>([]);
+  const meshRef = useRef<Mesh>([]);
   const dispatch = useDispatch();
   const torusArc = useAppSelector((state) => state.torusArc.value);
 
@@ -36,8 +36,8 @@ const Torus = ({ arc }: TorusProps) => {
 
   const rotate = () => {
     useFrame((state, delta) => {
-      ref.current.rotation.y += delta * 0.5;
-      ref.current.rotation.z += delta * 0.2;
+      meshRef.current.rotation.y += delta * 0.5;
+      meshRef.current.rotation.z += delta * 0.2;
     });
   };
 
@@ -49,7 +49,7 @@ const Torus = ({ arc }: TorusProps) => {
     <mesh
       castShadow={true}
       receiveShadow={true}
-      ref={ref}
+      ref={meshRef}
       position={[0, 0, -10]}
       // onClick={() => onClickHandler()}
     >

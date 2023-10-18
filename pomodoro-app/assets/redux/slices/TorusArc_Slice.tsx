@@ -1,7 +1,7 @@
 import { createSlice } from "@reduxjs/toolkit";
-import type { RootState } from "../Store";
 
-// Target Counter
+// This state is a control value to give the TorusGeometry 'phases'
+// Each phase correlates to each completed Pomodoro
 interface TorusArcState {
   value: number;
 }
@@ -26,5 +26,3 @@ export const torusArcSlice = createSlice({
 export const { arcIncrement, arcReset } = torusArcSlice.actions;
 
 export default torusArcSlice.reducer;
-
-// Target Counter
