@@ -1,7 +1,5 @@
 import { createSlice, PayloadAction } from "@reduxjs/toolkit";
 
-// This state is a control value to give the TorusGeometry 'phases'
-// Each phase correlates to each completed Pomodoro
 interface TorusArcState {
   index: number;
   angle: number;
