@@ -1,4 +1,4 @@
-import { createSlice, PayloadAction } from '@reduxjs/toolkit';
+import { createSlice, PayloadAction } from "@reduxjs/toolkit";
 
 export interface Note {
   title: string;
@@ -13,14 +13,13 @@ interface NoteState {
   storedNotes: Note[];
 }
 
-
 const taskSlice = createSlice({
-  name: 'task',
+  name: "task",
   initialState: {
-    selectedCategory: 'General',
-    description: '',
-    title: '',
-    storedNotes: [], 
+    selectedCategory: "General",
+    description: "",
+    title: "",
+    storedNotes: [],
   } as NoteState,
   reducers: {
     setSelectedCategory: (state, action: PayloadAction<string>) => {
@@ -35,15 +34,23 @@ const taskSlice = createSlice({
     setStoredNotes: (state, action: PayloadAction<Note[]>) => {
       state.storedNotes = action.payload;
     },
-    
-    editNote: (state, action: PayloadAction<{ index: number; updatedNote: Note }>) => {
+
+    editNote: (
+      state,
+      action: PayloadAction<{ index: number; updatedNote: Note }>
+    ) => {
       const { index, updatedNote } = action.payload;
       state.storedNotes[index] = updatedNote;
     },
-
   },
 });
 
-export const { setSelectedCategory, setDescription, setTitle, setStoredNotes,editNote } = taskSlice.actions;
+export const {
+  setSelectedCategory,
+  setDescription,
+  setTitle,
+  setStoredNotes,
+  editNote,
+} = taskSlice.actions;
 
 export default taskSlice.reducer;
