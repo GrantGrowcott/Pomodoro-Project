@@ -7,9 +7,9 @@ import {
   arcReset,
   arcIncrement,
   arcSkip,
-} from "../assets/redux/slices/TorusArc_Slice";
-import { increaseCompleted } from "../assets/redux/slices/Pomodoro_Slice";
-import { useAppSelector } from "../assets/redux/useApp";
+} from "../redux/slices/TorusArc_Slice";
+import { increaseCompleted } from "../redux/slices/Pomodoro_Slice";
+import { useAppSelector } from "../redux/useApp";
 import React from "react";
 import useInterval from "../backend/useInterval";
 import { ICON_SIZE } from "../constants";

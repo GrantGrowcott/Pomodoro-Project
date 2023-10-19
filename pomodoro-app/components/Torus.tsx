@@ -2,12 +2,12 @@ import { Mesh } from "three";
 import { useEffect, useRef, useState } from "react";
 import { useFrame } from "@react-three/fiber";
 import { useDispatch } from "react-redux";
-import { useAppSelector } from "../assets/redux/useApp";
-import { setIndex } from "../assets/redux/slices/TorusArc_Slice";
+import { useAppSelector } from "../redux/useApp";
+import { setIndex } from "../redux/slices/TorusArc_Slice";
 import React from "react";
 
 const Torus = () => {
-  const meshRef = useRef<Mesh>([]);
+  const meshRef = useRef<Mesh>([]); // No idea how to fix this.
   const dispatch = useDispatch();
   const focusDuration = useAppSelector(
     (state) => state.session.duration[0] * 60
