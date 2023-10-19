@@ -1,7 +1,11 @@
 /* By Zlorak:
 
 I have ZERO clue how any of this works - I will take ideas from what I can more or less
-gather into a whole new type (simplistic) code. */
+gather into a whole new type (simplistic) code.
+
+Most of the functionality here got moved and it is now controlled within Timer.tsx
+
+pomodoro.ts is left only for archive*/
 
 export enum SessionStatus {
   InProgress = "in progress",

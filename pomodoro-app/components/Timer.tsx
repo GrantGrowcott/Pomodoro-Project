@@ -12,6 +12,7 @@ import { increaseCompleted } from "../assets/redux/slices/Pomodoro_Slice";
 import { useAppSelector } from "../assets/redux/useApp";
 import React from "react";
 import useInterval from "../backend/useInterval";
+import { ICON_SIZE } from "../constants";
 
 enum PlayPauseButtonState {
   Started = "Started",
@@ -19,9 +20,9 @@ enum PlayPauseButtonState {
 }
 
 interface Interval {
-  init: Function;
-  stop: Function;
-  callback: Function;
+  init: () => void;
+  stop: () => void;
+  callback: () => void;
 }
 
 interface Durations {
@@ -63,9 +64,9 @@ const Timer = () => {
 
   // Session States
   const [sessionCtrl, setSessionCtrl] = useState<number>(0); // Helps defining what type of session the user is currently on | 0 = focus, 1 = short, 2 = long
-  const [sessionTime, setSessionTime] = useState<number>(durations.focus); // Current session time in seconds - taken from Session_Slice and whatever value has in that moment
+  const [sessionTime, setSessionTime] = useState<number>(durations.focus); // Current session time in seconds
   const [sessionType, setSessionType] = useState<string>("focus"); // Current Session Type
-  const [sessionRound, setSessionRound] = useState<number>(1);
+  const [sessionRound, setSessionRound] = useState<number>(1); // Round = Focus Session
   const [sessionActive, setSessionActive] = useState<boolean>(false); // Provides feedback if a session is currently running or not
   const [sessionPaused, setSessionPaused] = useState<boolean>(false); // Provides feedback if a session is paused or not
 
@@ -119,11 +120,11 @@ const Timer = () => {
       // Time is up!
       if (sessionTime <= 0 || sessionTime == 0) {
         switch (sessionCtrl) {
-          case 0: // End of Pomodoro
+          case 0: // End of a Pomodoro
             dispatch(increaseCompleted()); // +1 Pomodoros completed
-            // If 4 Round Pomodoros have NOT been completed...
+            // If 4 Round/Pomodoros have NOT been completed...
             if (sessionRound != 4) sessionPrep.short();
-            // If 4 Round Pomodoros have been completed...
+            // If 4 Round/Pomodoros have been completed...
             if (sessionRound == 4) sessionPrep.long();
             break;
           case 1: // End of Short Break
@@ -141,6 +142,8 @@ const Timer = () => {
   };
 
   // useInterval call here
+  // Explanation on WHY useInterval is needed
+  // https://overreacted.io/making-setinterval-declarative-with-react-hooks/
   useInterval(intervals.callback, delay);
 
   // Start Button onPress Handler
@@ -167,6 +170,7 @@ const Timer = () => {
     switch (sessionCtrl) {
       case 0:
         setSessionTime(durations.focus);
+        dispatch(arcReset());
         break;
       case 1:
         setSessionTime(durations.short);
@@ -175,7 +179,7 @@ const Timer = () => {
         setSessionTime(durations.long);
         break;
     }
-    dispatch(arcReset());
+
     setPlayPauseButtonState(PlayPauseButtonState.Paused);
     setSessionActive(false);
     setSessionPaused(false);
@@ -227,7 +231,7 @@ const Timer = () => {
           style={[styles.button, styles.stopColor]}
           onPress={handleResetButton}
         >
-          <Icon name="refresh" size={30} color="black" />
+          <Icon name="refresh" size={ICON_SIZE.size} color="black" />
         </TouchableOpacity>
 
         <View style={styles.gap} />
@@ -239,10 +243,10 @@ const Timer = () => {
           {
             {
               [PlayPauseButtonState.Started]: (
-                <Icon name="pause" size={30} color="black" />
+                <Icon name="pause" size={ICON_SIZE.size} color="black" />
               ),
               [PlayPauseButtonState.Paused]: (
-                <Icon name="play" size={30} color="black" />
+                <Icon name="play" size={ICON_SIZE.size} color="black" />
               ),
             }[playPauseButtonState]
           }
@@ -253,7 +257,7 @@ const Timer = () => {
           style={[styles.button, styles.stopColor]}
           onPress={handleSkipButton}
         >
-          <Icon name="forward" size={30} color="black" />
+          <Icon name="step-forward" size={ICON_SIZE.size} color="black" />
         </TouchableOpacity>
       </View>
 

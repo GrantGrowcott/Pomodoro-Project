@@ -13,21 +13,7 @@ const Torus = () => {
     (state) => state.session.duration[0] * 60
   );
 
-  const phaseCheck = (arc: number) => {
-    switch (arc) {
-      case 1:
-        return Math.PI * 2;
-      case 2:
-        return Math.PI * 0.5;
-      case 3:
-        return Math.PI * 1;
-      case 4:
-        return Math.PI * 1.5;
-      case 5:
-        return Math.PI * 2;
-    }
-  };
-
+  // Calculate how many degrees to increment per one second
   const calculateIncrementIndex = () => {
     dispatch(setIndex((Math.PI * 2) / (focusDuration + 1)));
   };
@@ -44,7 +30,6 @@ const Torus = () => {
   };
 
   // useFrames calls
-
   rotate();
 
   return (

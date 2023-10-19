@@ -1,6 +1,6 @@
 import { useSelector, useDispatch } from "react-redux";
-import { setStoredNotes, editNote } from "../assets/redux/slices/grant_Slice";
-import { RootState } from "../assets/redux/Store";
+import { setStoredNotes, editNote } from "../redux/slices/grant_Slice";
+import { RootState } from "../redux/Store";
 import React from "react";
 import {
   View,

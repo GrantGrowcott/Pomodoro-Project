@@ -9,9 +9,9 @@ import {
   setDescription,
   setTitle,
   setStoredNotes,
-} from "../assets/redux/slices/grant_Slice";
-import { RootState } from "../assets/redux/Store";
-import { Note } from "../assets/redux/slices/grant_Slice";
+} from "../redux/slices/grant_Slice";
+import { RootState } from "../redux/Store";
+import { Note } from "../redux/slices/grant_Slice";
 import { dropdownValues } from "../constants";
 
 const Task = () => {
