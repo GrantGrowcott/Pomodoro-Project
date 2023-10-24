@@ -1,6 +1,8 @@
 import React from "react";
 import { NavigationContainer } from "@react-navigation/native";
 import { createNativeStackNavigator } from "@react-navigation/native-stack";
+import { Provider } from "react-redux";
+import { store } from "../pomodoro-app/redux/Store"
 import Home from "./components/Home";
 import Header from "./components/Header";
 import Notes from "./components/Notes";
@@ -9,7 +11,7 @@ import {
   useFonts,
 } from "@expo-google-fonts/open-sans";
 
-const Stack = createNativeStackNavigator();
+
 
 export default function App() {
   const [fontsLoaded] = useFonts({
@@ -20,13 +22,17 @@ export default function App() {
     return null;
   }
 
+
+  const RootStack = createNativeStackNavigator();
+
   return (
+    <Provider store={store}>
     <NavigationContainer>
-      <Stack.Navigator
+      <RootStack.Navigator
         initialRouteName="Home"
         screenOptions={{ animation: "none" }}
       >
-        <Stack.Screen
+        <RootStack.Screen
           name="Home"
           component={Home}
           options={{
@@ -34,7 +40,7 @@ export default function App() {
             animation: "none",
           }}
         />
-        <Stack.Screen
+        <RootStack.Screen
           name="Notes"
           component={Notes}
           options={{
@@ -42,7 +48,8 @@ export default function App() {
             animation: "none",
           }}
         />
-      </Stack.Navigator>
+      </RootStack.Navigator>
     </NavigationContainer>
+    </Provider>
   );
 }

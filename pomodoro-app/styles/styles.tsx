@@ -181,6 +181,93 @@ export const styles = StyleSheet.create({
     flexDirection: "row",
   },
 
+  ellipsisContainer: {
+    position: 'absolute',
+    right: 10,
+    bottom: 21,
+    paddingTop: 15,
+  },
+
+  // Modal Styling
+
+  centeredView: {
+    flex: 1,
+    justifyContent: 'flex-end',
+    alignItems: 'center',
+    width:"100%",
+  },
+  modalBackground: {
+    flex: 1,
+    backgroundColor: '#00000080', 
+    justifyContent: 'center',
+    alignItems: 'center',
+  },
+
+  modalView: {
+    height:"-50%",
+    width:"100%",
+    padding: 40,
+    backgroundColor: 'white',
+    borderTopLeftRadius: 20,
+    borderTopRightRadius: 20, 
+    alignItems: 'center',
+    justifyContent:"flex-start",
+    shadowColor: '#000',
+    shadowOffset: {
+      width: 0,
+      height: 2,
+    },
+    shadowOpacity: 0.25,
+    shadowRadius: 4,
+    elevation: 5,
+  },
+
+  outerContainer: {
+    width: '100%'
+  },
+
+  modalInput: {
+    borderRadius: 30,
+    borderWidth: 1.5,
+    borderColor: "black",
+    paddingLeft: 10,
+    paddingVertical: 5,
+    width: "100%",
+    backgroundColor:  "#f5f1f1"
+  },
+
+  buttonClose: {
+    backgroundColor: "#007A33",
+  },
+
+  closeButton: {
+    position: 'absolute',
+    top: 10,
+    right: 0,
+    margin: 10, 
+    borderRadius: 30,
+    width: 60,
+    height: 60,
+    justifyContent: 'center',
+    alignItems: 'center',
+  },
+  textStyle: {
+    color: 'white',
+    fontWeight: "bold",
+    textAlign: 'center',
+  },
+  modalText: {
+    marginBottom: 25,
+    textAlign: 'center',
+    fontSize: 25
+  },
+
+  bottomGap : {
+    marginBottom: 10,
+    fontWeight: 'bold'
+  },
+
+
   // R3F Canvas Styles
 
   canvasContainer: {

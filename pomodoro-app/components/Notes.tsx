@@ -8,12 +8,11 @@ import TaskDisplay from "./TaskDisplay";
 import Icon from "react-native-vector-icons/Ionicons";
 import Icons from "react-native-vector-icons/FontAwesome";
 import { ICON_SIZE } from "../constants";
+import { useNavigation } from "@react-navigation/native";
 
-type NoteProps = {
-  navigation: any;
-};
 
-const Notes: React.FC<NoteProps> = ({ navigation }) => {
+const Notes = () => {
+  const navigation = useNavigation();
   return (
     <Provider store={store}>
       <View style={styles.container}>
@@ -21,7 +20,7 @@ const Notes: React.FC<NoteProps> = ({ navigation }) => {
         <TaskDisplay />
         <View style={styles.navbar}>
           <View style={styles.row}>
-            <TouchableOpacity onPress={() => navigation.navigate("Home")}>
+            <TouchableOpacity onPress={() => navigation.navigate("Home" as never)}>
               <Icon
                 name="home-outline"
                 size={ICON_SIZE.size}

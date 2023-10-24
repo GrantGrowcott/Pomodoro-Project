@@ -16,6 +16,15 @@ export const sessionSlice = createSlice({
   name: "sessionSlice",
   initialState,
   reducers: {
+    setFocus: (state, action: PayloadAction<number>) => {
+      state.duration[0] = action.payload;
+    },
+    setShortBreak: (state, action: PayloadAction<number>) => {
+      state.duration[1] = action.payload;
+    },
+    setLongBreak: (state, action: PayloadAction<number>) => {
+      state.duration[2] = action.payload;
+    },
     setDuration: (state, action: PayloadAction<number>) => {
       // Select a type of session then change its duration
       // The timer will take its initial time from this value customizable array
@@ -26,6 +35,6 @@ export const sessionSlice = createSlice({
   },
 });
 
-export const { setDuration } = sessionSlice.actions;
+export const { setDuration, setFocus, setShortBreak, setLongBreak } = sessionSlice.actions;
 
 export default sessionSlice.reducer;
