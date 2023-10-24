@@ -12,7 +12,8 @@ import { increaseCompleted } from "../redux/slices/Pomodoro_Slice";
 import { useAppSelector } from "../redux/useApp";
 import React from "react";
 import useInterval from "../backend/useInterval";
-import { ICON_SIZE } from "../constants";
+import { iconSize } from "../constants";
+import { colors } from "../constants";
 
 enum PlayPauseButtonState {
   Started = "Started",
@@ -223,7 +224,6 @@ const Timer = () => {
         </TouchableOpacity>
       </View>
       <Text>{secondsToMinutesString(sessionTime)}</Text>
-
       {/* Buttons */}
       <View style={styles.timerContainer}>
         {/* Reset Button */}
@@ -231,7 +231,7 @@ const Timer = () => {
           style={[styles.button, styles.stopColor]}
           onPress={handleResetButton}
         >
-          <Icon name="refresh" size={ICON_SIZE.size} color="black" />
+          <Icon name="refresh" size={iconSize.size} color= {colors.black} />
         </TouchableOpacity>
 
         <View style={styles.gap} />
@@ -243,10 +243,10 @@ const Timer = () => {
           {
             {
               [PlayPauseButtonState.Started]: (
-                <Icon name="pause" size={ICON_SIZE.size} color="black" />
+                <Icon name="pause" size={iconSize.size} color= {colors.black} />
               ),
               [PlayPauseButtonState.Paused]: (
-                <Icon name="play" size={ICON_SIZE.size} color="black" />
+                <Icon name="play" size={iconSize.size} color={colors.black} />
               ),
             }[playPauseButtonState]
           }
@@ -257,7 +257,7 @@ const Timer = () => {
           style={[styles.button, styles.stopColor]}
           onPress={handleSkipButton}
         >
-          <Icon name="step-forward" size={ICON_SIZE.size} color="black" />
+          <Icon name="step-forward" size={iconSize.size} color={colors.black} />
         </TouchableOpacity>
       </View>
 

@@ -7,7 +7,8 @@ import Task from "./Task";
 import TaskDisplay from "./TaskDisplay";
 import Icon from "react-native-vector-icons/Ionicons";
 import Icons from "react-native-vector-icons/FontAwesome";
-import { ICON_SIZE } from "../constants";
+import { iconSize } from "../constants";
+import { colors } from "../constants";
 import { useNavigation } from "@react-navigation/native";
 
 
@@ -23,16 +24,16 @@ const Notes = () => {
             <TouchableOpacity onPress={() => navigation.navigate("Home" as never)}>
               <Icon
                 name="home-outline"
-                size={ICON_SIZE.size}
-                color={ICON_SIZE.color}
+                size={iconSize.size}
+                color={colors.white}
               />
             </TouchableOpacity>
           </View>
           <View style={styles.row}>
             <Icons
               name="sticky-note"
-              size={ICON_SIZE.size}
-              color={ICON_SIZE.color}
+              size={iconSize.size}
+              color={colors.white}
             />
           </View>
         </View>

@@ -9,9 +9,9 @@ import {
   setDescription,
   setTitle,
   setStoredNotes,
-} from "../redux/slices/grant_Slice";
+} from "../redux/slices/Notes_Slice";
 import { RootState } from "../redux/Store";
-import { Note } from "../redux/slices/grant_Slice";
+import { Note } from "../redux/slices/Notes_Slice";
 import { dropdownValues } from "../constants";
 
 const Task = () => {
@@ -71,7 +71,7 @@ const Task = () => {
     <View style={styles.taskContainer}>
       <View style={styles.dropdownContainer}>
         <DropDownPicker
-          style={styles.dropdownStyle}
+          style={[styles.customDropdownContainer, styles.dropdownStyle]}
           open={open}
           value={value}
           items={items}

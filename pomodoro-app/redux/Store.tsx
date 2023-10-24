@@ -1,6 +1,6 @@
 import { configureStore } from "@reduxjs/toolkit";
 import torusArcSlice from "./slices/TorusArc_Slice";
-import taskSlice from "./slices/grant_Slice";
+import taskSlice from "./slices/Notes_Slice";
 import pomodoroSlice from "./slices/Pomodoro_Slice";
 import sessionSlice from "./slices/Session_Slice";
 

@@ -1,18 +1,36 @@
 import { StyleSheet } from "react-native";
+import { colors } from "../constants";
+
+
 
 export const styles = StyleSheet.create({
+
   container: {
     flex: 1,
-    backgroundColor: "#fff",
+    backgroundColor: colors.white,
     alignItems: "center",
     justifyContent: "flex-start",
     zIndex: 1,
   },
 
+  row: {
+    flexDirection: "row",
+  },
+
+// Home Styles 
   homeContainer: {
     flex: 1,
-    backgroundColor: "#FFF",
+    backgroundColor: colors.white,
   },
+
+  canvasContainer: {
+    flex: 1,
+    backgroundColor: colors.white,
+    borderRadius: 50,
+    margin: 20,
+  },
+
+  // Task Styles
 
   taskContainer: {
     flex: 1,
@@ -23,18 +41,12 @@ export const styles = StyleSheet.create({
     zIndex: 2,
   },
 
-  focusFont: {
-    fontSize: 20,
-  },
-
   dropdownContainer: {
     alignItems: "center",
     width: "100%",
   },
 
   dropdownStyle: {
-    width: "40%",
-    alignSelf: "center",
     marginTop: 10,
     minHeight: 40,
   },
@@ -50,7 +62,7 @@ export const styles = StyleSheet.create({
   },
 
   textInput: {
-    backgroundColor: "#f5f1f1",
+    backgroundColor: colors.lightGrey,
     textAlign: "center",
     borderRadius: 20,
     paddingVertical: 5,
@@ -67,13 +79,13 @@ export const styles = StyleSheet.create({
   },
 
   submitButton: {
-    backgroundColor: "#007A33",
+    backgroundColor: colors.green,
     paddingVertical: 10,
     paddingHorizontal: 19,
     borderRadius: 25,
   },
 
-  // Task Styles
+  // TaskDisplay Styles
 
   flatListContainer: {
     width: "100%",
@@ -83,7 +95,7 @@ export const styles = StyleSheet.create({
 
   noteContainer: {
     borderWidth: 1,
-    borderColor: "black",
+    borderColor: colors.black,
     borderRadius: 30,
     padding: 20,
     marginTop: 20,
@@ -99,7 +111,7 @@ export const styles = StyleSheet.create({
   categoryIcon: {
     borderRadius: 30,
     borderWidth: 1,
-    borderColor: "black",
+    borderColor: colors.black,
     width: "30%",
     alignSelf: "center",
     marginTop: 0,
@@ -109,7 +121,7 @@ export const styles = StyleSheet.create({
     width: "30%",
     padding: 10,
     marginTop: 20,
-    backgroundColor: "#007A33",
+    backgroundColor: colors.green,
     borderRadius: 30,
     alignItems: "center",
   },
@@ -132,7 +144,7 @@ export const styles = StyleSheet.create({
   },
 
   timeButton: {
-    backgroundColor: "#f5f1f1",
+    backgroundColor: colors.lightGrey,
     justifyContent: "center",
     alignItems: "center",
     padding: 10,
@@ -141,11 +153,11 @@ export const styles = StyleSheet.create({
   },
 
   startColor: {
-    backgroundColor: "#007A33",
+    backgroundColor: colors.green,
   },
 
   stopColor: {
-    backgroundColor: "#D0312D",
+    backgroundColor: colors.red,
   },
   gap: {
     width: 10,
@@ -159,7 +171,7 @@ export const styles = StyleSheet.create({
     paddingHorizontal: 16,
     paddingTop: 40,
     paddingBottom: 20,
-    backgroundColor: "#007A33",
+    backgroundColor: colors.green,
   },
   titleContainer: {
     flex: 1,
@@ -174,13 +186,10 @@ export const styles = StyleSheet.create({
     justifyItems: "center",
     paddingHorizontal: 60,
     paddingVertical: 10,
-    backgroundColor: "#007A33",
+    backgroundColor: colors.green,
     zIndex: 0,
   },
-  row: {
-    flexDirection: "row",
-  },
-
+  
   ellipsisContainer: {
     position: 'absolute',
     right: 10,
@@ -198,7 +207,7 @@ export const styles = StyleSheet.create({
   },
   modalBackground: {
     flex: 1,
-    backgroundColor: '#00000080', 
+    backgroundColor: colors.lightBlack, 
     justifyContent: 'center',
     alignItems: 'center',
   },
@@ -207,12 +216,12 @@ export const styles = StyleSheet.create({
     height:"-50%",
     width:"100%",
     padding: 40,
-    backgroundColor: 'white',
+    backgroundColor: colors.white,
     borderTopLeftRadius: 20,
     borderTopRightRadius: 20, 
     alignItems: 'center',
     justifyContent:"flex-start",
-    shadowColor: '#000',
+    shadowColor: colors.black,
     shadowOffset: {
       width: 0,
       height: 2,
@@ -229,15 +238,11 @@ export const styles = StyleSheet.create({
   modalInput: {
     borderRadius: 30,
     borderWidth: 1.5,
-    borderColor: "black",
+    borderColor: colors.black,
     paddingLeft: 10,
     paddingVertical: 5,
     width: "100%",
-    backgroundColor:  "#f5f1f1"
-  },
-
-  buttonClose: {
-    backgroundColor: "#007A33",
+    backgroundColor: colors.lightGrey
   },
 
   closeButton: {
@@ -252,7 +257,7 @@ export const styles = StyleSheet.create({
     alignItems: 'center',
   },
   textStyle: {
-    color: 'white',
+    color: colors.white,
     fontWeight: "bold",
     textAlign: 'center',
   },
@@ -267,13 +272,4 @@ export const styles = StyleSheet.create({
     fontWeight: 'bold'
   },
 
-
-  // R3F Canvas Styles
-
-  canvasContainer: {
-    flex: 1,
-    backgroundColor: "#FFF",
-    borderRadius: 50,
-    margin: 20,
-  },
 });

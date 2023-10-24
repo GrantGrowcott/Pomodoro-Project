@@ -6,7 +6,8 @@ import { styles } from "../styles/styles";
 import React from "react";
 import Icon from "react-native-vector-icons/Ionicons";
 import Icons from "react-native-vector-icons/FontAwesome";
-import { ICON_SIZE } from "../constants";
+import { colors } from "../constants";
+import { iconSize } from "../constants";
 import { useNavigation } from "@react-navigation/native";
 
 
@@ -26,14 +27,14 @@ const Home = () => {
         </View>
         <View style={styles.navbar}>
           <View style={styles.row}>
-            <Icon name="home" size={ICON_SIZE.size} color={ICON_SIZE.color} />
+            <Icon name="home" size={iconSize.size} color={colors.white} />
           </View>
           <View style={styles.row}>
             <TouchableOpacity onPress={() => nav.navigate("Notes" as never)}>
               <Icons
                 name="sticky-note-o"
-                size={ICON_SIZE.size}
-                color={ICON_SIZE.color}
+                size={iconSize.size}
+                color={colors.white}
               />
             </TouchableOpacity>
           </View>

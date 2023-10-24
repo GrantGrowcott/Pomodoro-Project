@@ -24,9 +24,8 @@ export default function App() {
 
 
   const RootStack = createNativeStackNavigator();
-
   return (
-    <Provider store={store}>
+  <Provider store={store}>
     <NavigationContainer>
       <RootStack.Navigator
         initialRouteName="Home"

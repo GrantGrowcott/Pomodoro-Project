@@ -5,6 +5,8 @@ import { useDispatch } from "react-redux";
 import { useAppSelector } from "../redux/useApp";
 import { setIndex } from "../redux/slices/TorusArc_Slice";
 import React from "react";
+import { colors } from "../constants";
+
 
 const Torus = () => {
   const meshRef = useRef<Mesh>([]); // No idea how to fix this.
@@ -42,7 +44,7 @@ const Torus = () => {
       <torusGeometry
         args={[5, 1.5, 16, 32, useAppSelector((state) => state.torusArc.angle)]}
       />
-      <meshStandardMaterial color="#ff4d4d" />
+      <meshStandardMaterial color= {colors.red} />
     </mesh>
   );
 };

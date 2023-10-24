@@ -1,5 +1,5 @@
 import { useSelector, useDispatch } from "react-redux";
-import { setStoredNotes, editNote } from "../redux/slices/grant_Slice";
+import { setStoredNotes, editNote } from "../redux/slices/Notes_Slice";
 import { RootState } from "../redux/Store";
 import React from "react";
 import {

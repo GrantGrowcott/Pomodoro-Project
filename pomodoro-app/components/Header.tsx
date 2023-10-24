@@ -1,19 +1,19 @@
 import React, { useState } from "react";
-import { Text, View, TouchableOpacity, Modal, TextInput } from "react-native";
+import { Text, View, TouchableOpacity, Modal, TextInput, Switch } from "react-native";
 import { styles } from "../styles/styles";
 import Icon from 'react-native-vector-icons/Ionicons';
-import { ICON_SIZE } from "../constants";
+import { iconSize } from "../constants";
 import { AntDesign } from '@expo/vector-icons';
 import { useDispatch, useSelector} from "react-redux";
-import { setFocus, setShortBreak, setLongBreak } from "../redux/slices/Session_Slice";
+import {setFocus, setShortBreak, setLongBreak } from "../redux/slices/Session_Slice";
 import { RootState } from "../redux/Store";
-
+import { colors } from "../constants";
 
 const Header = () => {
   const [modalVisible, setModalVisible] = useState(false);
   const dispatch = useDispatch();
   const time = useSelector((state: RootState) => state.session);
-  const { duration } = time;
+  const { duration} = time;
   
 
   const updateSetting = (key: string, value: number) => {
@@ -87,7 +87,7 @@ const Header = () => {
                 <Text>Done</Text>
               </TouchableOpacity>
               <TouchableOpacity style={styles.closeButton} onPress={closeModal}>
-                <AntDesign name="closecircle" size={ICON_SIZE.size} color="black" />
+                <AntDesign name="closecircle" size={iconSize.size} color= {colors.black} />
               </TouchableOpacity>
             </View>
           </View>
@@ -98,7 +98,7 @@ const Header = () => {
           style={{
             fontFamily: "OpenSans_800ExtraBold_Italic",
             fontSize: 30,
-            color: "#FFF",
+            color: colors.white,
           }}
         >
           Pomodoro
@@ -106,7 +106,7 @@ const Header = () => {
       </View>
       <View style={styles.ellipsisContainer}>
         <TouchableOpacity onPress={() => setModalVisible(true)}>
-          <Icon name="ellipsis-vertical" size={ICON_SIZE.size} color={ICON_SIZE.color} />
+          <Icon name="ellipsis-vertical" size={iconSize.size} color={colors.white} />
         </TouchableOpacity>
       </View>
     </View>
