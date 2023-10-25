@@ -6,7 +6,6 @@ import TorusDisplay from "../components/TorusDisplay";
 import Timer from "../components/Timer";
 import { styles } from "../styles/styles";
 import React from "react";
-import { PomodoroSession } from "../backend/pomodoro";
 import Icon from "react-native-vector-icons/Ionicons";
 import Icons from "react-native-vector-icons/FontAwesome";
 import { ICON_SIZE } from "../constants";
