@@ -1,5 +1,5 @@
 import React, { useState } from "react";
-import { Text, View, TouchableOpacity, Modal, TextInput } from "react-native";
+import { Text, View, TouchableOpacity, Modal, Alert } from "react-native";
 import { styles } from "../styles/styles";
 import Icon from "react-native-vector-icons/Ionicons";
 import { iconSize } from "../constants";
@@ -29,6 +29,9 @@ const Header = () => {
     dispatch(setFocus(sliders.focus));
     dispatch(setShortBreak(sliders.short));
     dispatch(setLongBreak(sliders.long));
+    closeModal();
+
+    Alert.alert("Settings", "Settings successfully saved.", [{ text: "Ok" }]);
   };
 
   const closeModal = () => {
