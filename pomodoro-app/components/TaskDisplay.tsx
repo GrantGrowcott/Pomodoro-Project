@@ -1,6 +1,5 @@
-import { useSelector, useDispatch } from "react-redux";
+import { useAppDispatch, useAppSelector } from "../redux/useApp";
 import { setStoredNotes, editNote } from "../redux/slices/Notes_Slice";
-import { RootState } from "../redux/Store";
 import React from "react";
 import {
   View,
@@ -13,9 +12,8 @@ import { styles } from "../styles/styles";
 import AsyncStorage from "@react-native-async-storage/async-storage";
 
 const TaskDisplay = () => {
-  const dispatch = useDispatch();
-  const task = useSelector((state: RootState) => state.task);
-  const { storedNotes } = task;
+  const dispatch = useAppDispatch();
+  const { storedNotes } = useAppSelector((state) => state.task);
 
   const deleteData = async (titleToDelete: string) => {
     try {

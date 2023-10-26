@@ -1,6 +1,6 @@
 import { View, Text, TouchableOpacity } from "react-native";
-import { useState } from "react";
-import { useDispatch } from "react-redux";
+import { useEffect, useState } from "react";
+import { useAppDispatch } from "../redux/useApp";
 import { styles } from "../styles/styles";
 import Icon from "react-native-vector-icons/FontAwesome";
 import {
@@ -57,10 +57,12 @@ const Timer = () => {
   };
 
   // Pulling the customizable timers from Store
+  const timers = useAppSelector((state) => state.session.duration);
+
   const durations: Durations = {
-    focus: useAppSelector((state) => state.session.duration[0] * 60),
-    short: useAppSelector((state) => state.session.duration[1] * 60),
-    long: useAppSelector((state) => state.session.duration[2] * 60),
+    focus: timers[0] * 60,
+    short: timers[1] * 60,
+    long: timers[2] * 60,
   };
 
   // Session States
@@ -70,6 +72,21 @@ const Timer = () => {
   const [sessionRound, setSessionRound] = useState<number>(1); // Round = Focus Session
   const [sessionActive, setSessionActive] = useState<boolean>(false); // Provides feedback if a session is currently running or not
   const [sessionPaused, setSessionPaused] = useState<boolean>(false); // Provides feedback if a session is paused or not
+
+  // useEffect to modify states on demand when timers are customized
+  useEffect(() => {
+    switch (sessionCtrl) {
+      case 0:
+        setSessionTime(durations.focus);
+        break;
+      case 1:
+        setSessionTime(durations.short);
+        break;
+      case 2:
+        setSessionTime(durations.long);
+        break;
+    }
+  }, [durations.focus, durations.short, durations.long]);
 
   // This object helps setting up states both in Timer and Redux slices in each type of session
   const sessionPrep: SessionPrep = {
@@ -100,7 +117,7 @@ const Timer = () => {
 
   // Delay State (useIntervals)
   const [delay, setDelay] = useState<number | null>(null);
-  const dispatch = useDispatch();
+  const dispatch = useAppDispatch();
 
   // Interval settings - time between callbacks, stop, and what it does.
   const intervals: Interval = {
@@ -231,7 +248,7 @@ const Timer = () => {
           style={[styles.button, styles.stopColor]}
           onPress={handleResetButton}
         >
-          <Icon name="refresh" size={iconSize.size} color= {colors.black} />
+          <Icon name="refresh" size={iconSize.size} color={colors.black} />
         </TouchableOpacity>
 
         <View style={styles.gap} />
@@ -243,7 +260,7 @@ const Timer = () => {
           {
             {
               [PlayPauseButtonState.Started]: (
-                <Icon name="pause" size={iconSize.size} color= {colors.black} />
+                <Icon name="pause" size={iconSize.size} color={colors.black} />
               ),
               [PlayPauseButtonState.Paused]: (
                 <Icon name="play" size={iconSize.size} color={colors.black} />
