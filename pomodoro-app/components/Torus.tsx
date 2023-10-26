@@ -1,16 +1,14 @@
 import { Mesh } from "three";
-import { useEffect, useRef, useState } from "react";
+import { useEffect, useRef } from "react";
 import { useFrame } from "@react-three/fiber";
-import { useDispatch } from "react-redux";
-import { useAppSelector } from "../redux/useApp";
+import { useAppSelector, useAppDispatch } from "../redux/useApp";
 import { setIndex } from "../redux/slices/TorusArc_Slice";
 import React from "react";
 import { colors } from "../constants";
 
-
 const Torus = () => {
   const meshRef = useRef<Mesh>([]); // No idea how to fix this.
-  const dispatch = useDispatch();
+  const dispatch = useAppDispatch();
   const focusDuration = useAppSelector(
     (state) => state.session.duration[0] * 60
   );
@@ -22,7 +20,7 @@ const Torus = () => {
 
   useEffect(() => {
     calculateIncrementIndex();
-  }, []);
+  }, [focusDuration]);
 
   const rotate = () => {
     useFrame((state, delta) => {
@@ -44,7 +42,7 @@ const Torus = () => {
       <torusGeometry
         args={[5, 1.5, 16, 32, useAppSelector((state) => state.torusArc.angle)]}
       />
-      <meshStandardMaterial color= {colors.red} />
+      <meshStandardMaterial color={colors.red} />
     </mesh>
   );
 };

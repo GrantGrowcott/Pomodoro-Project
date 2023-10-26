@@ -3,14 +3,13 @@ import { View, TextInput, Text, TouchableOpacity } from "react-native";
 import { styles } from "../styles/styles";
 import DropDownPicker from "react-native-dropdown-picker";
 import AsyncStorage from "@react-native-async-storage/async-storage";
-import { useSelector, useDispatch } from "react-redux";
+import { useAppDispatch, useAppSelector } from "../redux/useApp";
 import {
   setSelectedCategory,
   setDescription,
   setTitle,
   setStoredNotes,
 } from "../redux/slices/Notes_Slice";
-import { RootState } from "../redux/Store";
 import { Note } from "../redux/slices/Notes_Slice";
 import { dropdownValues } from "../constants";
 
@@ -19,9 +18,10 @@ const Task = () => {
   const [value, setValue] = useState("");
   const [items, setItems] = useState(dropdownValues);
 
-  const dispatch = useDispatch();
-  const task = useSelector((state: RootState) => state.task);
-  const { selectedCategory, description, title } = task;
+  const dispatch = useAppDispatch();
+  const { selectedCategory, description, title } = useAppSelector(
+    (state) => state.task
+  );
 
   const handleSubmit = async (newTitle: string, newDescription: string) => {
     const newNote: Note = {

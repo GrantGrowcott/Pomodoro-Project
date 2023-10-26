@@ -11,7 +11,6 @@ import { iconSize } from "../constants";
 import { colors } from "../constants";
 import { useNavigation } from "@react-navigation/native";
 
-
 const Notes = () => {
   const navigation = useNavigation();
   return (
@@ -21,7 +20,9 @@ const Notes = () => {
         <TaskDisplay />
         <View style={styles.navbar}>
           <View style={styles.row}>
-            <TouchableOpacity onPress={() => navigation.navigate("Home" as never)}>
+            <TouchableOpacity
+              onPress={() => navigation.navigate("Home" as never)}
+            >
               <Icon
                 name="home-outline"
                 size={iconSize.size}

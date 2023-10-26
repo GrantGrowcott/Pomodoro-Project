@@ -11,8 +11,6 @@ const TorusDisplay = () => {
   // For now, an instanced TorusGeometry within Canvas will be used as a placeholder.
 
   const torusSpawn = () => {
-    console.log("Torus spawning");
-
     return <Torus />;
   };
 

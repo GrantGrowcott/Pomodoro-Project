@@ -1,42 +1,36 @@
 import React, { useState } from "react";
-import { Text, View, TouchableOpacity, Modal, TextInput, Switch } from "react-native";
+import { Text, View, TouchableOpacity, Modal, TextInput } from "react-native";
 import { styles } from "../styles/styles";
-import Icon from 'react-native-vector-icons/Ionicons';
+import Icon from "react-native-vector-icons/Ionicons";
 import { iconSize } from "../constants";
-import { AntDesign } from '@expo/vector-icons';
-import { useDispatch, useSelector} from "react-redux";
-import {setFocus, setShortBreak, setLongBreak } from "../redux/slices/Session_Slice";
-import { RootState } from "../redux/Store";
+import { AntDesign } from "@expo/vector-icons";
+import { useAppDispatch, useAppSelector } from "../redux/useApp";
+import Slider from "react-native-a11y-slider";
+import {
+  setFocus,
+  setShortBreak,
+  setLongBreak,
+} from "../redux/slices/Session_Slice";
 import { colors } from "../constants";
 
 const Header = () => {
   const [modalVisible, setModalVisible] = useState(false);
-  const dispatch = useDispatch();
-  const time = useSelector((state: RootState) => state.session);
-  const { duration} = time;
-  
+  const dispatch = useAppDispatch();
+  const { duration } = useAppSelector((state) => state.session);
 
-  const updateSetting = (key: string, value: number) => {
-    switch (key) {
-      case "focus":
-        dispatch(setFocus(value))
-        break;
-      case "shortBreak":
-        dispatch(setShortBreak(value));
-        break;
-      case "longBreak":
-        dispatch(setLongBreak(value));
-        break;
-      default:
-        break;
-    }
+  // Local Storage for the sliders value
+  const sliders = {
+    focus: duration[0],
+    short: duration[1],
+    long: duration[2],
   };
 
-  const handleText = (key: string, value: string) => {
-    const numericValue = value === '' || isNaN(parseInt(value, 10)) ? 0 : parseInt(value, 10);
-    updateSetting(key, numericValue);
-  }
-    
+  const handleSaveButton = () => {
+    dispatch(setFocus(sliders.focus));
+    dispatch(setShortBreak(sliders.short));
+    dispatch(setLongBreak(sliders.long));
+  };
+
   const closeModal = () => {
     setModalVisible(false);
   };
@@ -49,45 +43,60 @@ const Header = () => {
         visible={modalVisible}
         onRequestClose={() => {
           setModalVisible(!modalVisible);
-        }}>
+        }}
+      >
         <View style={styles.modalBackground}>
           <View style={styles.centeredView}>
             <View style={styles.modalView}>
               <View style={styles.outerContainer}>
-                <Text style={{ ...styles.modalText, fontWeight: 'bold' }}>Settings</Text>
+                <Text style={{ ...styles.modalText, fontWeight: "bold" }}>
+                  Settings
+                </Text>
               </View>
               <View style={styles.outerContainer}>
-                <Text style={styles.bottomGap}>Focus Time:</Text>
-                <TextInput
-                  style={[styles.modalInput, styles.bottomGap]}
-                  keyboardType="numeric"
-                  onChangeText={(text) => handleText("focus", text)}
-                  value={duration[0].toString()}
-                ></TextInput>
+                <Text style={styles.bottomGap}>Focus Time (minutes):</Text>
+                <Slider
+                  min={5}
+                  max={120}
+                  increment={5}
+                  values={[sliders.focus]}
+                  onChange={(value: number[]) => (sliders.focus = value[0])}
+                />
               </View>
               <View style={styles.outerContainer}>
-                <Text style={styles.bottomGap}>Short Break:</Text>
-                <TextInput
-                  style={[styles.modalInput, styles.bottomGap]}
-                  keyboardType="numeric"
-                  onChangeText={(text) => handleText("shortBreak", text)}
-                  value={duration[1].toString()}
-                ></TextInput>
+                <Text style={styles.bottomGap}>Short Break (minutes):</Text>
+                <Slider
+                  min={1}
+                  max={30}
+                  increment={1}
+                  values={[sliders.short]}
+                  onChange={(value: number[]) => (sliders.short = value[0])}
+                />
               </View>
               <View style={styles.outerContainer}>
-                <Text style={styles.bottomGap}>Long Break:</Text>
-                <TextInput
-                  style={[styles.modalInput, styles.bottomGap]}
-                  keyboardType="numeric"
-                  onChangeText={(text) => handleText("longBreak", text)}
-                  value={duration[2].toString()}
-                ></TextInput>
+                <Text style={styles.bottomGap}>Long Break (minutes):</Text>
+                <Slider
+                  min={5}
+                  max={60}
+                  increment={5}
+                  values={[sliders.long]}
+                  onChange={(value: number[]) => (sliders.long = value[0])}
+                />
               </View>
               <TouchableOpacity>
-                <Text>Done</Text>
+                <Text
+                  style={styles.timeButton}
+                  onPress={() => handleSaveButton()}
+                >
+                  Save Settings
+                </Text>
               </TouchableOpacity>
               <TouchableOpacity style={styles.closeButton} onPress={closeModal}>
-                <AntDesign name="closecircle" size={iconSize.size} color= {colors.black} />
+                <AntDesign
+                  name="closecircle"
+                  size={iconSize.size}
+                  color={colors.black}
+                />
               </TouchableOpacity>
             </View>
           </View>
@@ -106,7 +115,11 @@ const Header = () => {
       </View>
       <View style={styles.ellipsisContainer}>
         <TouchableOpacity onPress={() => setModalVisible(true)}>
-          <Icon name="ellipsis-vertical" size={iconSize.size} color={colors.white} />
+          <Icon
+            name="ellipsis-vertical"
+            size={iconSize.size}
+            color={colors.white}
+          />
         </TouchableOpacity>
       </View>
     </View>
