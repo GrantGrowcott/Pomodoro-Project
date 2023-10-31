@@ -3,7 +3,7 @@
 
 The purpose of this project is to create a productivity application by splitting the users time into blocked time slots. The user has the ability to manually change how long they will focus and the length of the breaks they will take. As the session progresses, an on-screen 3 dimensional torus will grow in size to display overall progress. When the torus has completed its cycle, a break is started. The next session then begins.
 
-The notes section is used to track what type of session you completed, the length of your sessions and possible improvements that can be made for future sessions
+The notes section is used to track what type of session the user completed, the length of the sessions and possible improvements that can be made for future sessions. The notes persist over time and have the ability to be edited and deleted.
 
 ## Screenshots
 ---
