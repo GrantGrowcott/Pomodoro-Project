@@ -8,7 +8,7 @@ The notes section is used to track what type of session you completed, the lengt
 
 ## Screenshots
 
----![alt text](/pomodoro-app/screenshot-home.png)
+---![Home Page](/pomodoro-app/screenshot-home.png)
 
 ## Technologies
 
