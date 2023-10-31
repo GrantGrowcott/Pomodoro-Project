@@ -1,5 +1,4 @@
 # Pomodoro-Project
-
 ---
 
 The purpose of this project is to create a productivity application by splitting the users time into blocked time slots. The user has the ability to manually change how long they will focus and the length of the breaks they will take. As the session progresses, an on-screen 3 dimensional torus will grow in size to display overall progress. When the torus has completed its cycle, a break is started. The next session then begins.
@@ -7,16 +6,14 @@ The purpose of this project is to create a productivity application by splitting
 The notes section is used to track what type of session you completed, the length of your sessions and possible improvements that can be made for future sessions
 
 ## Screenshots
-
 ---
 
-![Home Page](/pomodoro-app/screenshot-home.png)
-![Home Page](/pomodoro-app/screenshot-modal.png)
-![Home Page](/pomodoro-app/screenshot-notes.png)
-![Home Page](/pomodoro-app/screenshot-notes-example.png)
+![Home Page](/pomodoro-app/screenshots/screenshot-home.png)
+![Home Page](/pomodoro-app/screenshots/screenshot-modal.png)
+![Home Page](/pomodoro-app/screenshots/screenshot-notes.png)
+![Home Page](/pomodoro-app/screenshots/screenshot-notes-example.png)
 
 ## Technologies
-
 ---
 
 Project is created with:
