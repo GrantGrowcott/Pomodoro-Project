@@ -3,14 +3,13 @@ export const iconSize = {
 };
 
 export const colors = {
-  black: '#000000',
-  lightBlack: '#00000080',
+  black: "#000000",
+  lightBlack: "#00000080",
   white: "#FFF",
   lightGrey: "#f5f1f1",
   green: "#007A33",
-  red: "#D0312D"
-
-}
+  red: "#D0312D",
+};
 
 export const dropdownValues = [
   { label: "General", value: "General" },
@@ -19,5 +18,3 @@ export const dropdownValues = [
   { label: "Meditation", value: "Meditation" },
   { label: "Read", value: "Read" },
 ];
-
-

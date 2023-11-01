@@ -28,24 +28,13 @@ export default function App() {
       <NavigationContainer>
         <RootStack.Navigator
           initialRouteName="Home"
-          screenOptions={{ animation: "none" }}
+          screenOptions={{
+            header: () => <Header />,
+            animation: "none",
+          }}
         >
-          <RootStack.Screen
-            name="Home"
-            component={Home}
-            options={{
-              header: () => <Header />,
-              animation: "none",
-            }}
-          />
-          <RootStack.Screen
-            name="Notes"
-            component={Notes}
-            options={{
-              header: () => <Header />,
-              animation: "none",
-            }}
-          />
+          <RootStack.Screen name="Home" component={Home} />
+          <RootStack.Screen name="Notes" component={Notes} />
         </RootStack.Navigator>
       </NavigationContainer>
     </Provider>

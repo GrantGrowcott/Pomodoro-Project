@@ -7,7 +7,7 @@ import React from "react";
 import { colors } from "../constants";
 
 const Torus = () => {
-  const meshRef = useRef<Mesh>([]); // No idea how to fix this.
+  const meshRef = useRef<Mesh>([] as never);
   const dispatch = useAppDispatch();
   const focusDuration = useAppSelector(
     (state) => state.session.duration[0] * 60

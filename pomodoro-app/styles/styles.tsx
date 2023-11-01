@@ -1,9 +1,14 @@
 import { StyleSheet } from "react-native";
 import { colors } from "../constants";
 
-
-
 export const styles = StyleSheet.create({
+  boldFont: {
+    fontWeight: "bold",
+  },
+
+  topMargin: {
+    marginTop: 40
+  },
 
   container: {
     flex: 1,
@@ -17,7 +22,7 @@ export const styles = StyleSheet.create({
     flexDirection: "row",
   },
 
-// Home Styles 
+  // Home Styles
   homeContainer: {
     flex: 1,
     backgroundColor: colors.white,
@@ -179,6 +184,12 @@ export const styles = StyleSheet.create({
     justifyContent: "center",
   },
 
+  titleText: {
+    fontFamily: "OpenSans_800ExtraBold_Italic",
+    fontSize: 30,
+    color: colors.white,
+  },
+
   navbar: {
     width: "100%",
     flexDirection: "row",
@@ -189,9 +200,9 @@ export const styles = StyleSheet.create({
     backgroundColor: colors.green,
     zIndex: 0,
   },
-  
+
   ellipsisContainer: {
-    position: 'absolute',
+    position: "absolute",
     right: 10,
     bottom: 21,
     paddingTop: 15,
@@ -201,26 +212,26 @@ export const styles = StyleSheet.create({
 
   centeredView: {
     flex: 1,
-    justifyContent: 'flex-end',
-    alignItems: 'center',
-    width:"100%",
+    justifyContent: "flex-end",
+    alignItems: "center",
+    width: "100%",
   },
   modalBackground: {
     flex: 1,
-    backgroundColor: colors.lightBlack, 
-    justifyContent: 'center',
-    alignItems: 'center',
+    backgroundColor: colors.lightBlack,
+    justifyContent: "center",
+    alignItems: "center",
   },
 
   modalView: {
-    height:"-50%",
-    width:"100%",
+    height: "-50%",
+    width: "100%",
     padding: 40,
     backgroundColor: colors.white,
     borderTopLeftRadius: 20,
-    borderTopRightRadius: 20, 
-    alignItems: 'center',
-    justifyContent:"flex-start",
+    borderTopRightRadius: 20,
+    alignItems: "center",
+    justifyContent: "flex-start",
     shadowColor: colors.black,
     shadowOffset: {
       width: 0,
@@ -232,7 +243,7 @@ export const styles = StyleSheet.create({
   },
 
   outerContainer: {
-    width: '100%'
+    width: "100%",
   },
 
   modalInput: {
@@ -242,34 +253,33 @@ export const styles = StyleSheet.create({
     paddingLeft: 10,
     paddingVertical: 5,
     width: "100%",
-    backgroundColor: colors.lightGrey
+    backgroundColor: colors.lightGrey,
   },
 
   closeButton: {
-    position: 'absolute',
+    position: "absolute",
     top: 10,
     right: 0,
-    margin: 10, 
+    margin: 10,
     borderRadius: 30,
     width: 60,
     height: 60,
-    justifyContent: 'center',
-    alignItems: 'center',
+    justifyContent: "center",
+    alignItems: "center",
   },
   textStyle: {
     color: colors.white,
     fontWeight: "bold",
-    textAlign: 'center',
+    textAlign: "center",
   },
   modalText: {
     marginBottom: 25,
-    textAlign: 'center',
-    fontSize: 25
+    textAlign: "center",
+    fontSize: 25,
   },
 
-  bottomGap : {
+  bottomGap: {
     marginBottom: 10,
-    fontWeight: 'bold'
+    fontWeight: "bold",
   },
-
 });

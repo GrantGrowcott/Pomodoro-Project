@@ -129,21 +129,21 @@ const Timer = () => {
     },
     callback: () => {
       // Time is running fellas
-      if (sessionTime != 0) {
+      if (sessionTime !== 0) {
         setSessionTime(sessionTime - 1);
 
-        if (sessionCtrl == 0) dispatch(arcIncrement()); // Increasing the Torus!
+        if (sessionCtrl === 0) dispatch(arcIncrement()); // Increasing the Torus!
       }
 
       // Time is up!
-      if (sessionTime <= 0 || sessionTime == 0) {
+      if (sessionTime <= 0 || sessionTime === 0) {
         switch (sessionCtrl) {
           case 0: // End of a Pomodoro
             dispatch(increaseCompleted()); // +1 Pomodoros completed
             // If 4 Round/Pomodoros have NOT been completed...
-            if (sessionRound != 4) sessionPrep.short();
+            if (sessionRound !== 4) sessionPrep.short();
             // If 4 Round/Pomodoros have been completed...
-            if (sessionRound == 4) sessionPrep.long();
+            if (sessionRound === 4) sessionPrep.long();
             break;
           case 1: // End of Short Break
             sessionPrep.focus();
@@ -215,9 +215,9 @@ const Timer = () => {
         dispatch(increaseCompleted());
         dispatch(arcSkip()); // +1 Pomodoros completed
         // If 4 Round Pomodoros have NOT been completed...
-        if (sessionRound != 4) sessionPrep.short();
+        if (sessionRound !== 4) sessionPrep.short();
         // If 4 Round Pomodoros have been completed...
-        if (sessionRound == 4) sessionPrep.long();
+        if (sessionRound === 4) sessionPrep.long();
         break;
       case 1: // End of Short Break
         sessionPrep.focus();

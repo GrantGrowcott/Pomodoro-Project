@@ -5,11 +5,6 @@ import Torus from "./Torus";
 import React from "react";
 
 const TorusDisplay = () => {
-  // No more Tree - Torus is the way now.
-  // Unknown knowledge is needed to import 3D assets using React Native/Expo.
-  // This will eventually be implemented as a tree with phases/animations.
-  // For now, an instanced TorusGeometry within Canvas will be used as a placeholder.
-
   const torusSpawn = () => {
     return <Torus />;
   };

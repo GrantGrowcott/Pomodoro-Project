@@ -52,7 +52,7 @@ const Header = () => {
           <View style={styles.centeredView}>
             <View style={styles.modalView}>
               <View style={styles.outerContainer}>
-                <Text style={{ ...styles.modalText, fontWeight: "bold" }}>
+                <Text style={{ ...styles.modalText, ...styles.boldFont }}>
                   Settings
                 </Text>
               </View>
@@ -106,15 +106,7 @@ const Header = () => {
         </View>
       </Modal>
       <View style={styles.titleContainer}>
-        <Text
-          style={{
-            fontFamily: "OpenSans_800ExtraBold_Italic",
-            fontSize: 30,
-            color: colors.white,
-          }}
-        >
-          Pomodoro
-        </Text>
+        <Text style={styles.titleText}>Pomodoro</Text>
       </View>
       <View style={styles.ellipsisContainer}>
         <TouchableOpacity onPress={() => setModalVisible(true)}>

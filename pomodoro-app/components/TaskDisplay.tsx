@@ -53,16 +53,15 @@ const TaskDisplay = () => {
         renderItem={({ item, index }) => (
           <View key={index} style={styles.noteContainer}>
             <Text style={{ ...styles.textContainer, ...styles.categoryIcon }}>
-              {" "}
               {item.category}
             </Text>
             <TextInput
-              style={{ ...styles.textContainer, fontWeight: "bold" }}
+              style={{ ...styles.textContainer, ...styles.boldFont }}
               value={item.title}
               onChangeText={(text) => editNoteField(index, text, "title")}
             />
             <TextInput
-              style={{ ...styles.textContainer, marginTop: 40 }}
+              style={{ ...styles.textContainer, ...styles.topMargin }}
               value={item.description}
               onChangeText={(text) => editNoteField(index, text, "description")}
             />

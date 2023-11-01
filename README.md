@@ -55,6 +55,7 @@ Project is : complete
 ---
 Room for improvement:
 - Light and dark mode / custom color schemes that the user can choose
+- Adaptable for all device sizes 
 
 ## Acknowledgements
 ---
